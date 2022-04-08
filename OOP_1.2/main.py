@@ -1,11 +1,11 @@
-from banHang import banHang
-from sp import QLSP
-from kh import QLKH
+from Bill import Management_Bill
+from Product import Management_Pro
+from Customer import Management_Cus
 import datetime
 check = True
-QLSP = QLSP()
-QLKH = QLKH()
-BH = banHang()
+MP = Management_Pro()
+MC = Management_Cus()
+MB = Management_Bill()
 while check:
     try:
         print('---')
@@ -22,23 +22,23 @@ while check:
         check = True
     else:
         if key == 1:       
-            QLSP.nhapSP()
+            MP.Add_Pro()
         if key == 2:
-            QLSP.xuatSP(QLSP.getlistSP())
+            MP.Show_Pro(MP.Get_list_Pro())
         if key == 3: 
-            QLKH.nhapKH()
+            MC.Add_Cus()
         if key == 4: 
-            QLKH.xuatKH(QLKH.getlistKH())
+            MC.Show_Cus(MC.Get_list_Cus())
         if key == 5:
-            kh = input('Nhap ma KH: ')
-            sp = input('Nhap ten sp muon mua hang: ')
-            BH.banHang(kh,sp)
+            cus = input('Nhap ten KH: ')
+            pro = input('Nhap ten sp muon mua hang: ')
+            MB.Sell(cus, pro)
         if key == 6: 
-            kh = input('Nhap ten kh muon xem hoa don: ')
-            BH.baocaoMuaHang(kh)
+            cus = input('Nhap ten kh muon xem hoa don: ')
+            MB.Show_Bill(cus)
         if key == 7:
-            BH.sapXep()
-            BH.daBan()
+            MB.Sort()
+            MB.Selled()
         if key == 100:
             check = False
     

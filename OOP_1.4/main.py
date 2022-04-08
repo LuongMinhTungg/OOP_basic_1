@@ -1,10 +1,10 @@
 from tkinter import Tk
-from kh import QLKH
-from tk import TKVL,TKTK,QLTK
-KhachHang = QLKH()
-TKVL = TKVL()
-TKTK = TKTK()
-QLTK = QLTK()
+from Customer import Management_Cus
+from Account import Saving_Acc,Current_Acc,Management_Acc
+MC = Management_Cus()
+CA = Current_Acc()
+SA = Saving_Acc()
+MA = Management_Acc()
 check = True
 while check:
     try:
@@ -19,15 +19,29 @@ while check:
         check = True
     else:
         if k == 1:
-            KhachHang.ThemTK()
+            MC.Add_Cus()
             
         if k == 2:
             n = input('nhap ten kh: ')
-            KhachHang.LayTK(n)
+            MC.Show_Acc(n)
         if k == 3:
-            stk = input('Nhap stk muon gui: ')
-            QLTK.GuiTien(stk)
+            try:
+                ID = int(input('Nhap stk muon gui: '))
+                money = float(input('Nhap so tien muon gui: '))
+            except ValueError:
+                print('Khong hop le')
+            else:
+                MA.Deposit_Money(ID,money)
         if k == 4:
-            TenKH = input('Nhap ten KH: ')
-            stk = input('Nhap stk: ')
-            KhachHang.RutTien(TenKH,stk)
+            cus_name = input('Nhap ten KH: ')
+            try:
+                ID = int(input('Nhap stk: '))
+                money = float(input('Nhap so tien muon rut: '))
+            except ValueError:
+                print('khong hop le')
+            else:
+                MC.Cus_Withdraws_Money(cus_name, ID, money)
+        if k == 5:
+            SA.Show_List()
+        if k == 'Q':
+            check = False
