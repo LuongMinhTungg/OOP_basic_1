@@ -1,11 +1,11 @@
-from Bill import Management_Bill
-from Product import Management_Pro
-from Customer import Management_Cus
+from Bill import ManagementBill
+from Product import ManagementPro
+from Customer import ManagementCus
 import datetime
 check = True
-MP = Management_Pro()
-MC = Management_Cus()
-MB = Management_Bill()
+MP = ManagementPro()
+MC = ManagementCus()
+MB = ManagementBill()
 while check:
     try:
         print('---')
@@ -21,24 +21,24 @@ while check:
     except ValueError:
         check = True
     else:
-        if key == 1:       
-            MP.Add_Pro()
+        if key == 1:
+            MP.add_pro()
         if key == 2:
-            MP.Show_Pro(MP.Get_list_Pro())
-        if key == 3: 
-            MC.Add_Cus()
-        if key == 4: 
-            MC.Show_Cus(MC.Get_list_Cus())
+            MP.Show_Pro(MP.GetlistPro())
+        if key == 3:
+            MC.add_cus()
+        if key == 4:
+            MC.show_cus(MC.get_list_cus())
         if key == 5:
             cus = input('Nhap ten KH: ')
             pro = input('Nhap ten sp muon mua hang: ')
-            MB.Sell(cus, pro)
+            MB.sell(cus, pro)
         if key == 6: 
             cus = input('Nhap ten kh muon xem hoa don: ')
-            MB.Show_Bill(cus)
+            MB.show_bill(cus)
         if key == 7:
-            MB.Sort()
-            MB.Selled()
+            MB.sort()
+            MB.selled()
         if key == 100:
             check = False
     

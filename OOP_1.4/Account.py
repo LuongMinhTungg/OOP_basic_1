@@ -1,110 +1,97 @@
 
-from ssl import SO_TYPE
-
-
 class Account:
-    def __init__(self, ID, Amount):
-        self.ID = ID
-        self.Amount = Amount
-    def getSTK(self):
-        return self.stk
-    def getSD(self):
-        return self.sd
+    def __init__(self, id, amount):
+        self.id = id
+        self.amount = amount
+    def get_id(self):
+        return self.id
+    def get_amount(self):
+        return self.amount
     
-class Management_Acc:
+class ManagementAcc:
     list_acc = []
-    def Get_Acc(self):
+    def get_acc(self):
         return self.list_acc
-    def Quanity_Acc(self):
+    def quanity_acc(self):
         return self.list_acc.__len__()
     
-    def Deposit_Money(self,ID, money):
+    def deposit_money(self,id, money):
 
-        if self.Quanity_Acc() > 0:
-            for i in self.Get_Acc():
-                if i.ID == ID  and  money >= 0:
-                    i.Amount = i.Amount + money
+        if self.quanity_acc() > 0:
+            for i in self.get_acc():
+                if i.id == id  and  money >= 0:
+                    i.amount = i.amount + money
                     print('Ban vua nap:',money,'d')
-                    print('So du hien tai cua ban: ',i.Amount,'d')
+                    print('So du hien tai cua ban: ', i.amount, 'd')
 
         
-    def Withdraws_Money(self, money,ID):
-        if self.Quanity_Acc(Management_Acc) > 0:
-            for i in self.Get_Acc(Management_Acc):
-                if i.ID == ID:
-                    if money >= 0 and money < i.Amount:
-                        i.Amount = i.Amount - money
-                        print('Ban vua rut: ', money, 'd, o stk: ',i.ID)
-                        print('So tien hien tai cua ban: ', i.Amount,'d')
+    def withdrawal_money(self, money,ID):
+        if self.quanity_acc() > 0:
+            for i in self.get_acc(ManagementAcc):
+                if i.id == ID:
+                    if money >= 0 and money < i.amount:
+                        i.amount = i.amount - money
+                        print('Ban vua rut: ', money, 'd, o stk: ', i.id)
+                        print('So tien hien tai cua ban: ', i.amount, 'd')
                     else:
                         print('Khong hop le')
         
                     
-    def Add_Account(self):
+    def add_account(self):
         try:
-            ID = int(input('Nhap so tai khoan: '))
+            id = int(input('Nhap so tai khoan: '))
             amount = float(input('Nhap so du: '))
         except ValueError:
             print('Khong hop le')
         else:
-            acc = Account(ID,amount)
+            acc = Account(id, amount)
             self.list_acc.append(acc)
         return acc
 
-class Saving_Acc(Management_Acc):
+class SavingAcc(ManagementAcc):
     list_saving = []
-    def Get_list_Saving(self):        
+    def get_list_saving(self):
         return self.list_saving
-    def Quanity_list_Saving(self):
+    def quanity_list_saving(self):
         return self.list_saving.__len__()
     
-    def Add_Account(self):
-        acc = super().Add_Account(Saving_Acc)
+    def add_account(self):
+        acc = super().add_account()
         self.list_saving.append(acc)
         return acc
 
 
-    def Show_Acc(self, ID):
-        for i in self.Get_list_Saving(Saving_Acc):
-            if ID == i.ID:
-                print('TKTK: So tai khoan: ',i.ID,' co so du: ',i.Amount,' voi lai suat 8% nam:', i.Amount*8/100)
-    def Withdraws_Money(self, money, ID):
-        super().Withdraws_Money(Saving_Acc,money,ID)
+    def show_acc(self, id):
+        for i in self.get_list_saving():
+            if id == i.id:
+                print('TKTK: So tai khoan: ', i.id, ' co so du: ', i.amount, ' voi lai suat 8% nam:', i.amount * 8 / 100)
+    def withdrawal_money(self, money, ID):
+        super().withdrawal_money(SavingAcc, money)
         
-    def Show_List(self):
-        if self.Quanity_Acc() > 0:
-            for i in self.Get_list_Saving():
-                print(' {:<18} {:<18} '.format(i.ID, i.Amount))
+    def show_list(self):
+        if self.quanity_acc() > 0:
+            for i in self.get_list_saving():
+                print(' {:<18} {:<18} '.format(i.id, i.amount))
 
         
-class Current_Acc(Management_Acc):
+class CurrentAcc(ManagementAcc):
     list_curr = []
-    def Get_list_Curr(self):
+    def get_list_curr(self):
         return self.list_curr
     
-    def Quanity_list_Curr(self):
+    def quanity_list_curr(self):
         return self.list_curr.__len__()
     
-    def Add_Account(self):
-        acc = super().Add_Account(Current_Acc)
+    def add_account(self):
+        acc = super().add_account()
         self.list_curr.append(acc)
         return acc
     
-    def Show_Acc(self,ID):
-        for i in self.Get_list_Curr(Current_Acc):
-            if ID == i.ID:
-                print('TKVL: So tai khoan: ',i.ID,' co so du: ',i.Amount)
-
-    def Search_Cus_Name(self, cus_name):
-        cus = None
-        if self.soluongKH() > 0:
-            for i in self.getlistKH():
-                if i.tenKH == cus_name:
-                    kh = i
-        return cus
-    
+    def show_acc(self,id):
+        for i in self.get_list_Curr(CurrentAcc):
+            if id == i.id:
+                print('TKVL: So tai khoan: ', i.id, ' co so du: ', i.amount)
                 
-    def Withdraws_Money(self, money,ID):
-
-        super().Withdraws_Money(Current_Acc,money,ID)
+    def withdrawal_money(self, money, id):
+        super().withdrawal_money(CurrentAcc, money)
         

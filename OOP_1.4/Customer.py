@@ -1,167 +1,167 @@
 from turtle import right
-from Account import Management_Acc as MA
-from Account import Saving_Acc as SA
-from Account import Current_Acc as CA
+from Account import ManagementAcc as MA
+from Account import SavingAcc as SA
+from Account import CurrentAcc as CA
+
+
 class Customer:
-    def __init__(self,Cus_Name, Acc, Num_Acc):
-        self.Cus_Name = Cus_Name
-        self.Acc = Acc
-        self.Num_Acc = Num_Acc
+    def __init__(self,cus_name, acc, num_acc):
+        self.cus_name = cus_name
+        self.acc = acc
+        self.num_acc = num_acc
     
-class Management_Cus:
+class ManagementCus:
     list_cus = []
 
-    def Quanity_Cus(self):
+    def quanity_cus(self):
         return self.list_cus.__len__()
 
-    def Get_list_Cus(self):
+    def get_list_cus(self):
         return self.list_cus
     
-    def Num_Acc(self,cus_name):
+    def num_acc(self, cus_name):
         num = 1
-        if self.Quanity_Cus() > 0:
-            for i in self.Get_list_Cus():
+        if self.quanity_cus() > 0:
+            for i in self.get_list_cus():
                 if i.Cus_Name == cus_name:
                     num = num + 1
         return num
     
-
-    
-    def Add_Cus(self):
+    def add_cus(self):
         count = 0
         check = True
         while check:
             c = True
             cus_name = input('TenKH: ')
-            for i in self.Get_list_Cus():
+            for i in self.get_list_cus():
                 if cus_name == i.Cus_Name:
                     count = count+1
-            if count >=9:
+            if count >= 9:
                 print('Ban ko the them tai khoan nua')
                 break
             
             while c:
-                Cate_Acc = input('nhap loai tk: ')
-                if Cate_Acc.upper() == 'TKTK':
-                    acc = SA.Add_Account(SA)
+                cate_acc = input('nhap loai tk: ')
+                if cate_acc.upper() == 'TKTK':
+                    acc = SA.add_account(SA)
                     c = False
-                if Cate_Acc.upper() == 'TKVL':
-                    acc = CA.Add_Account(CA)
+                if cate_acc.upper() == 'TKVL':
+                    acc = CA.add_account(CA)
                     c = False
             
-            num_acc = self.Num_Acc(cus_name)
+            num_acc = self.num_acc(cus_name)
             
             cus = Customer(cus_name, acc, num_acc)
             self.list_cus.append(cus)
             check = False
-    
 
-    def BinarySearchRecursive(self,list,left,right, ID):       
+    def binary_search_recursive(self, list, left, right, id):
         try:
             if right>=left:
                 mid = left + (right-left)//2
-                if list[mid].ID == ID:
+                if list[mid].id == id:
                     return mid
-                if list[mid].ID > ID:
-                    return self.BinarySearchRecursive(list, left, mid-1, ID)
+                if list[mid].id > id:
+                    return self.binary_search_recursive(list, left, mid - 1, id)
                 else:
-                    return self.BinarySearchRecursive(list, mid+1, right , ID)
+                    return self.binary_search_recursive(list, mid + 1, right, id)
             return -1
         except IndexError:
             return -1
         
 
 
-    def Check_CA(self,cus_name,ID):
+    def check_ca(self,cus_name,ID):
         c = False        
-        for i in self.Get_list_Cus():
-            if i.Cus_Name == cus_name and i.Acc.ID == ID:
-                list = sorted(CA.Get_list_Curr(CA),key = lambda i:(i.ID), reverse=False)
-                right = CA.Quanity_list_Curr(CA)
-                if self.BinarySearchRecursive(list,0,right,ID) != -1:
+        for i in self.get_list_cus():
+            if i.cus_name == cus_name and i.acc.id == ID:
+                list = sorted(CA.get_list_curr(CA), key = lambda i:(i.id), reverse=False)
+                right = CA.quanity_list_curr(CA)
+                if self.binary_search_recursive(list, 0, right, ID) != -1:
                         c = True    
                                
-        return c      
-    def Check_SA(self,cus_name,ID):
+        return c
+
+    def check_sa(self,cus_name,id):
         c = False
-        for i in self.Get_list_Cus():
-            if i.Cus_Name == cus_name and i.Acc.ID == ID:
-                list = sorted(SA.Get_list_Saving(SA),key = lambda i:(i.ID), reverse=False)
-                right = SA.Quanity_list_Saving(SA)
-                if self.BinarySearchRecursive(list, 0, right, ID) != -1:
+        for i in self.get_list_cus():
+            if i.cus_name == cus_name and i.acc.id == id:
+                list = sorted(SA.get_list_saving(SA), key = lambda i:(i.id), reverse=False)
+                right = SA.quanity_list_saving(SA)
+                if self.binary_search_recursive(list, 0, right, id) != -1:
                         c = True  
                          
         return c   
      
-    def Check_Con(self,cus_name, ID_CA, ID_SA):
+    def check_con(self,cus_name, id_ca, id_sa):
         c = False                   
-        if self.Check_CA(cus_name, ID_CA) == True and self.Check_SA(cus_name,ID_SA) == True:
+        if self.check_ca(cus_name, id_ca) == True and self.check_sa(cus_name, id_sa) == True:
             c = True
         return c
     
-    def Sum_Amount_SA(self,cus_name):
+    def sum_amount_sa(self,cus_name):
         sum = 0
-        for i in self.Get_list_Cus():
+        for i in self.get_list_cus():
             if i.Cus_Name == cus_name:
-                if self.Check_SA(cus_name,i.Acc.ID) == True:
-                    sum = sum + i.Acc.Amount
+                if self.check_sa(cus_name, i.Acc.id) == True:
+                    sum = sum + i.acc.amount
         return sum
     
-    def Show_Acc(self,cus_name):
-        if self.Quanity_Cus() > 0:
+    def show_acc(self,cus_name):
+        if self.quanity_cus() > 0:
             print('Ten Khach Hang: ', cus_name)
-            if MA.Quanity_Acc(MA) > 0:
-                for i in self.Get_list_Cus():
-                    if i.Cus_Name == cus_name:
-                        SA.Show_Acc(SA,i.Acc.ID)
-                        CA.Show_Acc(CA,i.Acc.ID)
+            if MA.quanity_acc(MA) > 0:
+                for i in self.get_list_cus():
+                    if i.cus_name == cus_name:
+                        SA.show_acc(SA, i.Acc.id)
+                        CA.show_acc(CA, i.Acc.id)
 
-                print('Khach hang co tat ca ',i.Num_Acc,' tk')
-                print('Tong So Du trong tat ca tk tiet kiem: ', self.Sum_Amount_SA(cus_name))
+                print('Khach hang co tat ca ', i.num_acc, ' tk')
+                print('Tong So Du trong tat ca tk tiet kiem: ', self.sum_amount_sa(cus_name))
                                   
-    def Withdraws_Money_CA(self,cus_name,money,ID_CA,ID_SA):
+    def withdrawal_money_ca(self,cus_name,money,id_ca,id_sa):
         gift_money = 0     
-        if self.Check_Con(cus_name,ID_CA,ID_SA) == True:
-            for i in SA.Get_list_Saving(SA):
-                if i.ID == ID_SA:
+        if self.check_con(cus_name, id_ca, id_sa) == True:
+            for i in SA.get_list_saving(SA):
+                if i.id == id_sa:
                     print('So tien o tk khong du can chuyen them tu tktk')
                     gift_money = float(input('Nhap so tien can chuyen: '))
-                    i.Amount = i.Amount - gift_money
-            for i in CA.Get_list_Curr(CA):
-                if i.ID == ID_CA:
-                    i.Amount = i.Amount + gift_money
-                    CA.Withdraws_Money(CA,money,ID_CA)
+                    i.amount = i.amount - gift_money
+            for i in CA.get_list_curr(CA):
+                if i.id == id_ca:
+                    i.amount = i.amount + gift_money
+                    CA.withdrawal_money(CA, money, id_ca)
         else:
             print('Khong tim thay tk lien ket')
     
-    def Check_Amount(self,ID,money):
-        if self.Quanity_Cus() > 0:
-            for i in self.Get_list_Cus():
-                if ID == i.Acc.ID:
-                    if money > i.Acc.Amount: 
+    def check_amount(self, id, money):
+        if self.quanity_cus() > 0:
+            for i in self.get_list_cus():
+                if id == i.acc.id:
+                    if money > i.acc.amount:
                         return 1
                     else:
                         return 0
                     
-    def Cus_Withdraws_Money(self,cus_name,ID, money):
-        if self.Quanity_Cus() > 0:
+    def cus_withdrawal_money(self,cus_name,id, money):
+        if self.quanity_cus() > 0:
             """for i in self.Get_list_Cus():
                 if i.Cus_Name == cus_name and i.Acc.ID == ID :"""
-            if self.Check_SA(cus_name,ID) == True:
-                SA.Withdraws_Money(SA,money,ID)
+            if self.check_sa(cus_name, id) == True:
+                SA.withdrawal_money(SA, money, id)
                 
-            if self.Check_CA(cus_name,ID) == True:
-                if self.Check_Amount(ID, money) == 0:
-                    CA.Withdraws_Money(CA,money,ID)
-                elif self.Check_Amount(ID, money) == 1:
+            if self.check_ca(cus_name, id) == True:
+                if self.check_amount(id, money) == 0:
+                    CA.withdrawal_money(CA, money, id)
+                elif self.check_amount(id, money) == 1:
                     print('So tien rut lon hon hien co can phai su dung tktk')
                     try:
-                        ID_SA = int(input('Nhap stk tiet kiem lien ket:'))
+                        id_sa = int(input('Nhap stk tiet kiem lien ket:'))
                     except ValueError:
                         print('Khong hop le')
                     else:
                         print('Chuyen tien tu tktk sang tkvl')
-                        self.Withdraws_Money_CA(cus_name,money,ID,ID_SA)
+                        self.withdrawal_money_ca(cus_name, money, id, id_sa)
         else:
             print('Chua co tai khoan trong he thong')            
                 

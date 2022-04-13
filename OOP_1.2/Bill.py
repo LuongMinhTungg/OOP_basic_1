@@ -1,57 +1,27 @@
 from mailbox import NotEmptyError
-from Product import Management_Pro as MP
-from Customer import Management_Cus as MC
+from Product import ManagementPro as MP
+from Customer import ManagementCus as MC
 
 import datetime
 
 class Bill:
-    def __init__(self, Cus_Name, Pro_Name, Pro_Price, Time):
-        self.Cus_Name = Cus_Name
-        self.Pro_Name = Pro_Name
-        self.Pro_Price = Pro_Price
-        self.Time = Time
+    def __init__(self, cus_name, pro_name, pro_price, time):
+        self.cus_name = cus_name
+        self.pro_name = pro_name
+        self.pro_price = pro_price
+        self.time = time
 
 
-class Management_Bill:
+class ManagementBill:
     list_bill = []
     list = []
     discount = 0
     
-    '''
-    def banHang(self,kh,sp):
-        s = None
-        if QLKH.soluongKH(QLKH) > 0:
-            for j in QLKH.getlistKH(QLKH):
-                if kh.upper == j.tenKH.upper:       
-                    if QLSP.soluongSP(QLSP) > 0:
-                        for i in QLSP.getlistSP(QLSP):
-                            if i.tenSP == sp:
-                                s = i               
-                                if s != None:
-                                    QLSP.getlistSP(QLSP).remove(s)
-                                    self.list.append(s)
-                                    self.km = self.km + 1
-                                    if self.km <= 5:
-                                        tg = datetime.datetime.now()                              
-                                        hd = HD(kh,sp,i.gia/2,tg)
-                                        self.listHD.append(hd)
-                                    else:
-                                        tg = datetime.datetime.now()
-                                        hd = HD(kh,sp,i.gia,tg)
-                                        self.listHD.append(hd)
-                            else:
-                                print('Khong tim thay san pham')
-                    else:
-                        print('Kho rong')
-                else:
-                    print('Khong co khach hang tuong ung')
-        else:
-            print('chua co khach hang')
-    '''
-    def Discount(self, cus_name, pro, discount):
+
+    def discount(self, cus_name, pro, discount):
         discount = self.discount
         if pro!= None:
-            MP.Get_list_Pro(MP).remove(pro)
+            MP.GetlistPro(MP).remove(pro)
             self.list.append(pro)
             self.discount = self.discount + 1
             if self.discount <= 5:
@@ -63,13 +33,13 @@ class Management_Bill:
                 bill = Bill(cus_name,pro.Pro_Name,pro.Pro_Price,time)
                 self.list_bill.append(bill)
 
-    def Sell(self,cus_name,pro_name):
+    def sell(self,cus_name,pro_name):
         pro = None
         try:
-            if MC.Search_Cus_Name(MC, cus_name).Cus_Name.upper() == cus_name.upper():
+            if MC.search_cus_name(MC, cus_name).Cus_Name.upper() == cus_name.upper():
                 if MP.Search_Pro_Name(MP, pro_name).Pro_Name.upper() == pro_name.upper():
                     pro = MP.Search_Pro_Name(MP,pro_name)
-                    self.Discount(cus_name,pro,self.discount)
+                    self.discount(cus_name, pro, self.discount)
         except AttributeError:
             print('chua co sp hoac khach hang')
         else:
@@ -77,29 +47,29 @@ class Management_Bill:
                 
             
                         
-    def Get_list_Bill(self):
+    def get_list_bill(self):
         return self.list_bill
     
-    def Quanity_Bill(self):
+    def quanity_bill(self):
         return self.list_bill.__len__()
     
-    def Selled(self):
-        if self.Quanity_Bill() > 0:
+    def selled(self):
+        if self.quanity_bill() > 0:
             print('Danh sach san pham da ban')
             print(' {:<18} {:<18} {:<8} {:<40}'.format('ten kh', 'ten sp', 'Gia', 'thoi gian mua'))
-            for i in self.Get_list_Bill():
-                print(' {:<18} {:<18} {:<8} {:<40}'.format(i.Cus_Name, i.Pro_Name, i.Pro_Name, i.Time.strftime("%m/%d/%Y, %H:%M:%S")))
+            for i in self.get_list_bill():
+                print(' {:<18} {:<18} {:<8} {:<40}'.format(i.cus_name, i.pro_name, i.pro_price, i.time.strftime("%m/%d/%Y, %H:%M:%S")))
         else:
             print('chua co hoa don')
         
-    def Sort(self):
-        self.Get_list_Bill().sort(key = lambda i:(i.Cus_Name,i.Time), reverse=True)
+    def sort(self):
+        self.get_list_bill().sort(key = lambda i:(i.cus_name, i.time), reverse=True)
         
-    def Show_Bill(self,cus_name):
+    def show_bill(self,cus_name):
         print(' {:<18} {:<18} {:<8} {:<40}'.format('ten kh', 'ten sp', 'Gia', 'thoi gian mua'))
-        for i in self.Get_list_Bill():
-            if i.Cus_Name == cus_name:
-                print(' {:<18} {:<18} {:<8} {:<40}'.format(i.Cus_Name, i.Pro_Name, i.Pro_Price, i.Time.strftime("%m/%d/%Y, %H:%M:%S")))
+        for i in self.get_list_bill():
+            if i.cus_name == cus_name:
+                print(' {:<18} {:<18} {:<8} {:<40}'.format(i.cus_name, i.pro_name, i.pro_price, i.time.strftime("%m/%d/%Y, %H:%M:%S")))
                 
             
                 

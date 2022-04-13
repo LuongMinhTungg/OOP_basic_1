@@ -1,10 +1,10 @@
 from tkinter import Tk
-from Customer import Management_Cus
-from Account import Saving_Acc,Current_Acc,Management_Acc
-MC = Management_Cus()
-CA = Current_Acc()
-SA = Saving_Acc()
-MA = Management_Acc()
+from Customer import ManagementCus
+from Account import SavingAcc,CurrentAcc,ManagementAcc
+MC = ManagementCus()
+CA = CurrentAcc()
+SA = SavingAcc()
+MA = ManagementAcc()
 check = True
 while check:
     try:
@@ -19,11 +19,11 @@ while check:
         check = True
     else:
         if k == 1:
-            MC.Add_Cus()
+            MC.add_cus()
             
         if k == 2:
             n = input('nhap ten kh: ')
-            MC.Show_Acc(n)
+            MC.show_acc(n)
         if k == 3:
             try:
                 ID = int(input('Nhap stk muon gui: '))
@@ -31,7 +31,7 @@ while check:
             except ValueError:
                 print('Khong hop le')
             else:
-                MA.Deposit_Money(ID,money)
+                MA.deposit_money(ID, money)
         if k == 4:
             cus_name = input('Nhap ten KH: ')
             try:
@@ -40,8 +40,8 @@ while check:
             except ValueError:
                 print('khong hop le')
             else:
-                MC.Cus_Withdraws_Money(cus_name, ID, money)
+                MC.cus_withdrawal_money(cus_name, ID, money)
         if k == 5:
-            SA.Show_List()
+            SA.show_list()
         if k == 'Q':
             check = False
