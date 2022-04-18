@@ -11,13 +11,13 @@ class Account:
     def get_amount(self):
         return self.amount
     
-    def Fees(self, fees):
+    def get_fees(self, fees):
         return fees * 1/100
  
     def deposit(self):
         a = float(input('Nhap so tien muon nap: '))       
         if(a >= 0):           
-            fees = self.Fees(a)
+            fees = self.get_fees(a)
             if fees > 1000:
                 fees = fees
             else:
@@ -33,7 +33,7 @@ class Account:
     def withdrawal(self):
         a = float(input('Nhap so tien muon rut: '))
         if a >= 0 and a < self.get_amount():
-            fees = self.fees(a)
+            fees = self.get_fees(a)
             if fees > 1000:
                 fees = fees
             else:
@@ -47,7 +47,7 @@ class Account:
         return a
     
     def show(self):
-        print('Ten tk:',Account.get_acc_name(),'Ma TK:',Account.get_acc_number(),'So Du:',Account.get_amount())
+        print('Ten tk:',self.get_acc_name(),'Ma TK:',self.get_acc_number(),'So Du:',self.get_amount())
 
 acc_name = 'tung'
 acc_number = '1'
@@ -67,12 +67,11 @@ while check:
         check = True
     else:
         if k == 1:
-            Account.deposit()
-            
+            acc.deposit()
         if k == 2:
             acc.withdrawal()
         if k == 3:
-           acc.show()
+            acc.show()
 
 
 
