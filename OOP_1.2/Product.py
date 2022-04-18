@@ -8,19 +8,19 @@ class Product:
 
 
 class ManagementPro:
-    list_pro = []
+    list = []
 
     def quanity_pro(self):
-        return self.list_pro.__len__()
+        return self.list.__len__()
 
-    def get_list_pro(self):
-        return self.list_pro
+    def list_pro(self):
+        return self.list
 
     def id(self):
         max_id = 1
         if self.quanity_pro() > 0:
-            max_id = self.list_pro[0].pro_id
-            for i in self.get_list_pro():
+            max_id = self.list[0].pro_id
+            for i in self.list_pro():
                 if max_id < i.pro_id:
                     max_id = i.pro_id
             max_id = max_id + 1
@@ -38,12 +38,12 @@ class ManagementPro:
         pro_price = float(input('gia: '))
         if pro_price > 0:
             pro = Product(pro_id, pro_name, pro_brand_name, pro_cate, pro_price)
-            self.list_pro.append(pro)
+            self.list.append(pro)
         else:
             print('Gia tien khong dc am')
 
-    def Show_Pro(self, list):
-        f = open('ListPro.txt.txt', 'w+')
+    def show_pro(self, list):
+        f = open('ListPro.txt', 'w+')
         print('{:<8} {:<18} {:<18} {:<12}{:<8}'.format('MaSP', 'TenSP', 'Thuong Hieu', 'LoaiSP', 'Gia'))
         f.write('{:<8} {:<18} {:<18} {:<12}{:<8} \n'.format('MaSP', 'TenSP', 'Thuong Hieu', 'LoaiSP', 'Gia'))
         if list.__len__() > 0:
@@ -59,8 +59,8 @@ class ManagementPro:
 
     def search_pro_name(self, pro_name):
         pro = None
-        if self.quanity_pro() > 0:
-            for i in self.get_list_pro():
+        if self.quanity_pro(ManagementPro) > 0:
+            for i in self.list_pro(ManagementPro):
                 if pro_name == i.pro_name:
                     pro = i
         else:

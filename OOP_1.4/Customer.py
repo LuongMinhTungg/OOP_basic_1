@@ -11,19 +11,19 @@ class Customer:
         self.num_acc = num_acc
     
 class ManagementCus:
-    list_cus = []
+    list = []
 
     def quanity_cus(self):
-        return self.list_cus.__len__()
+        return self.list.__len__()
 
-    def get_list_cus(self):
-        return self.list_cus
+    def list_cus(self):
+        return self.list
     
     def num_acc(self, cus_name):
         num = 1
         if self.quanity_cus() > 0:
-            for i in self.get_list_cus():
-                if i.Cus_Name == cus_name:
+            for i in self.list_cus():
+                if i.cus_name == cus_name:
                     num = num + 1
         return num
     
@@ -33,8 +33,8 @@ class ManagementCus:
         while check:
             c = True
             cus_name = input('TenKH: ')
-            for i in self.get_list_cus():
-                if cus_name == i.Cus_Name:
+            for i in self.list_cus():
+                if cus_name == i.cus_name:
                     count = count+1
             if count >= 9:
                 print('Ban ko the them tai khoan nua')
@@ -52,7 +52,7 @@ class ManagementCus:
             num_acc = self.num_acc(cus_name)
             
             cus = Customer(cus_name, acc, num_acc)
-            self.list_cus.append(cus)
+            self.list.append(cus)
             check = False
 
     def binary_search_recursive(self, list, left, right, id):
@@ -73,9 +73,9 @@ class ManagementCus:
 
     def check_ca(self,cus_name,ID):
         c = False        
-        for i in self.get_list_cus():
+        for i in self.list_cus():
             if i.cus_name == cus_name and i.acc.id == ID:
-                list = sorted(CA.get_list_curr(CA), key = lambda i:(i.id), reverse=False)
+                list = sorted(CA.list_curr(CA), key = lambda i:(i.id), reverse=False)
                 right = CA.quanity_list_curr(CA)
                 if self.binary_search_recursive(list, 0, right, ID) != -1:
                         c = True    
@@ -84,12 +84,12 @@ class ManagementCus:
 
     def check_sa(self,cus_name,id):
         c = False
-        for i in self.get_list_cus():
+        for i in self.list_cus():
             if i.cus_name == cus_name and i.acc.id == id:
-                list = sorted(SA.get_list_saving(SA), key = lambda i:(i.id), reverse=False)
+                list = sorted(SA.list_saving(SA), key = lambda i:(i.id), reverse=False)
                 right = SA.quanity_list_saving(SA)
                 if self.binary_search_recursive(list, 0, right, id) != -1:
-                        c = True  
+                        c = True
                          
         return c   
      
@@ -101,9 +101,9 @@ class ManagementCus:
     
     def sum_amount_sa(self,cus_name):
         sum = 0
-        for i in self.get_list_cus():
-            if i.Cus_Name == cus_name:
-                if self.check_sa(cus_name, i.Acc.id) == True:
+        for i in self.list_cus():
+            if i.cus_name == cus_name:
+                if self.check_sa(cus_name, i.acc.id) == True:
                     sum = sum + i.acc.amount
         return sum
     
@@ -111,10 +111,10 @@ class ManagementCus:
         if self.quanity_cus() > 0:
             print('Ten Khach Hang: ', cus_name)
             if MA.quanity_acc(MA) > 0:
-                for i in self.get_list_cus():
+                for i in self.list_cus():
                     if i.cus_name == cus_name:
-                        SA.show_acc(SA, i.Acc.id)
-                        CA.show_acc(CA, i.Acc.id)
+                        SA.show_acc(SA, i.acc.id)
+                        CA.show_acc(CA, i.acc.id)
 
                 print('Khach hang co tat ca ', i.num_acc, ' tk')
                 print('Tong So Du trong tat ca tk tiet kiem: ', self.sum_amount_sa(cus_name))
@@ -122,12 +122,12 @@ class ManagementCus:
     def withdrawal_money_ca(self,cus_name,money,id_ca,id_sa):
         gift_money = 0     
         if self.check_con(cus_name, id_ca, id_sa) == True:
-            for i in SA.get_list_saving(SA):
+            for i in SA.list_saving(SA):
                 if i.id == id_sa:
                     print('So tien o tk khong du can chuyen them tu tktk')
                     gift_money = float(input('Nhap so tien can chuyen: '))
                     i.amount = i.amount - gift_money
-            for i in CA.get_list_curr(CA):
+            for i in CA.list_curr(CA):
                 if i.id == id_ca:
                     i.amount = i.amount + gift_money
                     CA.withdrawal_money(CA, money, id_ca)
@@ -136,7 +136,7 @@ class ManagementCus:
     
     def check_amount(self, id, money):
         if self.quanity_cus() > 0:
-            for i in self.get_list_cus():
+            for i in self.list_cus():
                 if id == i.acc.id:
                     if money > i.acc.amount:
                         return 1
@@ -150,7 +150,7 @@ class ManagementCus:
             if self.check_sa(cus_name, id) == True:
                 SA.withdrawal_money(SA, money, id)
                 
-            if self.check_ca(cus_name, id) == True:
+            elif self.check_ca(cus_name, id) == True:
                 if self.check_amount(id, money) == 0:
                     CA.withdrawal_money(CA, money, id)
                 elif self.check_amount(id, money) == 1:
@@ -162,6 +162,8 @@ class ManagementCus:
                     else:
                         print('Chuyen tien tu tktk sang tkvl')
                         self.withdrawal_money_ca(cus_name, money, id, id_sa)
+                else:
+                    print('None')
         else:
             print('Chua co tai khoan trong he thong')            
                 

@@ -24,11 +24,11 @@ while check:
         if key == 1:
             MP.add_pro()
         if key == 2:
-            MP.Show_Pro(MP.GetlistPro())
+            MP.show_pro(MP.list_pro())
         if key == 3:
             MC.add_cus()
         if key == 4:
-            MC.show_cus(MC.get_list_cus())
+            MC.show_cus(MC.list_cus())
         if key == 5:
             cus = input('Nhap ten KH: ')
             pro = input('Nhap ten sp muon mua hang: ')
