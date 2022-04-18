@@ -23,17 +23,20 @@ class ManagementAcc:
         return self.list_acc.__len__()
     
     def deposit_money(self,id, money):
-        if self.quanity_acc() > 0:
-            if id not in self.list_id() == True:
-                print('None')
+        try:
+            if self.quanity_acc() > 0:
+                if id not in self.list_id() == True:
+                    print('None')
+                else:
+                    c = self.list_id().index(id)
+                    if money >= 0:
+                        self.get_acc()[c].amount = self.get_acc()[c].amount + money
+                        print('Ban vua nap:',money,'d')
+                        print('So du hien tai cua ban: ', self.get_acc()[c].amount, 'd')
             else:
-                c = self.list_id().index(id)
-                if money >= 0:
-                    self.get_acc()[c].amount = self.get_acc()[c].amount + money
-                    print('Ban vua nap:',money,'d')
-                    print('So du hien tai cua ban: ', self.get_acc()[c].amount, 'd')
-        else:
-            print('none')
+                print('none')
+        except ValueError:
+            print('chua co tk')
         
     def withdrawal_money(self, money,id):
         if self.quanity_acc(ManagementAcc) > 0:

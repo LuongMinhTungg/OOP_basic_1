@@ -41,7 +41,7 @@ class ManagementBill:
                     pro = MP.search_pro_name(MP,pro_name)
                     self.discount(cus_name, pro, self.num_discount)
         except AttributeError:
-            print('chua co sp hoac khach hang')
+            print('chua co sp hoac kh')
         else:
             print('Mua hang thanh cong')
 
@@ -65,10 +65,13 @@ class ManagementBill:
         self.list_bill().sort(key = lambda i:(i.cus_name, i.time), reverse=True)
         
     def show_bill(self,cus_name):
-        print(' {:<18} {:<18} {:<8} {:<40}'.format('ten kh', 'ten sp', 'Gia', 'thoi gian mua'))
-        for i in self.list_bill():
-            if i.cus_name == cus_name:
-                print(' {:<18} {:<18} {:<8} {:<40}'.format(i.cus_name, i.pro_name, i.pro_price, i.time.strftime("%m/%d/%Y, %H:%M:%S")))
-                
-            
+        try:
+            if MC.search_cus_name(MC, cus_name).cus_name.upper() == cus_name.upper():
+                print(' {:<18} {:<18} {:<8} {:<40}'.format('ten kh', 'ten sp', 'Gia', 'thoi gian mua'))
+                for i in self.list_bill():
+                    if i.cus_name == cus_name:
+                        print(' {:<18} {:<18} {:<8} {:<40}'.format(i.cus_name, i.pro_name, i.pro_price, i.time.strftime("%m/%d/%Y, %H:%M:%S")))
+        except AttributeError:
+            print('chua co kh')
+
                 

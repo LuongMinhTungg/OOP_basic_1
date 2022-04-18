@@ -63,6 +63,4 @@ class ManagementPro:
             for i in self.list_pro(ManagementPro):
                 if pro_name == i.pro_name:
                     pro = i
-        else:
-            print('chua co sp')
         return pro

@@ -13,6 +13,12 @@ class Customer:
 class ManagementCus:
     list = []
 
+    def list_name(self):
+        list_name = []
+        for i in self.list:
+            list_name.append(i.cus_name)
+        return list_name
+
     def quanity_cus(self):
         return self.list.__len__()
 
@@ -109,15 +115,19 @@ class ManagementCus:
     
     def show_acc(self,cus_name):
         if self.quanity_cus() > 0:
-            print('Ten Khach Hang: ', cus_name)
-            if MA.quanity_acc(MA) > 0:
+            if cus_name not in self.list_name():
+                print('None')
+            else:
+                print('Ten Khach Hang: ', cus_name)
                 for i in self.list_cus():
                     if i.cus_name == cus_name:
                         SA.show_acc(SA, i.acc.id)
                         CA.show_acc(CA, i.acc.id)
+                    print('Khach hang co tat ca ', i.num_acc, ' tk')
+                    print('Tong So Du trong tat ca tk tiet kiem: ', self.sum_amount_sa(cus_name))
+        else:
+            print('chua co kh')
 
-                print('Khach hang co tat ca ', i.num_acc, ' tk')
-                print('Tong So Du trong tat ca tk tiet kiem: ', self.sum_amount_sa(cus_name))
                                   
     def withdrawal_money_ca(self,cus_name,money,id_ca,id_sa):
         gift_money = 0     

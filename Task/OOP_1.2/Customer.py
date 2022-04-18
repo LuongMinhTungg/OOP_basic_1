@@ -55,6 +55,4 @@ class ManagementCus:
             for i in self.list_cus(ManagementCus):
                 if i.cus_name.upper() == cus_name.upper():
                     cus = i
-        else:
-            print('chua co kh')
         return cus

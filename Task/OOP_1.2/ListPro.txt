@@ -1,2 +1,1 @@
 MaSP     TenSP              Thuong Hieu        LoaiSP      Gia      
-1        1                  1                  do dien     2000.0  2        2                  2                  do dien     40000.0 3        4                  2                  do gia dung 20000.0 
